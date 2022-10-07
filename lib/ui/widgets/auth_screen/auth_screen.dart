@@ -10,14 +10,8 @@ import 'package:test_task/resources/app_assets.dart';
 import 'package:test_task/ui/theme/app_colors.dart';
 import 'package:test_task/ui/widgets/auth_screen/auth_model.dart';
 
-class AuthScreen extends StatefulWidget {
+class AuthScreen extends StatelessWidget {
   const AuthScreen({Key? key}) : super(key: key);
-
-  @override
-  State<AuthScreen> createState() => _AuthScreenState();
-}
-
-class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,16 +63,10 @@ class _GetStartedWidget extends StatelessWidget {
   }
 }
 
-class _PhoneNumbersWidgets extends StatefulWidget {
+class _PhoneNumbersWidgets extends StatelessWidget {
   const _PhoneNumbersWidgets({
     Key? key,
   }) : super(key: key);
-
-  @override
-  State<_PhoneNumbersWidgets> createState() => _PhoneNumbersWidgetsState();
-}
-
-class _PhoneNumbersWidgetsState extends State<_PhoneNumbersWidgets> {
   @override
   Widget build(BuildContext context) {
     final model = context.read<AuthModel>();

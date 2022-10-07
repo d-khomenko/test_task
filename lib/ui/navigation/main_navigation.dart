@@ -12,6 +12,7 @@ class MainNavigation {
       case MainNavigationRoutesNames.auth:
         return MaterialPageRoute<dynamic>(
           builder: (_) => ChangeNotifierProvider<AuthModel>(
+            lazy: false,
             create: (context) => AuthModel(),
             child: const AuthScreen(),
           ),
