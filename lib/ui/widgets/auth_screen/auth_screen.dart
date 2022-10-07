@@ -7,18 +7,18 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:test_task/country_picker/country_code_picker.dart';
-import 'package:test_task/theme/app_assets.dart';
-import 'package:test_task/theme/app_colors.dart';
+import 'package:test_task/resources/app_assets.dart';
+import 'package:test_task/ui/theme/app_colors.dart';
+import 'package:test_task/ui/widgets/country_picker/country_code_picker.dart';
 
-class MainPage extends StatefulWidget {
-  const MainPage({Key? key}) : super(key: key);
+class AuthScreen extends StatefulWidget {
+  const AuthScreen({Key? key}) : super(key: key);
 
   @override
-  State<MainPage> createState() => _MainPageState();
+  State<AuthScreen> createState() => _AuthScreenState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _AuthScreenState extends State<AuthScreen> {
   final TextEditingController controller = TextEditingController();
   bool isButtonActive = false;
 
@@ -132,7 +132,7 @@ class _PhoneNumbersWidgetsState extends State<_PhoneNumbersWidgets> {
             code = await countryPicker.showPicker(context: context) ?? code;
             //if (code != null) print(code);
             setState(() {
-              log("tapped on picker");
+              log("$code");
             });
           },
           child: Container(
@@ -230,7 +230,7 @@ class _SubmitButtonWidget extends StatelessWidget {
       padding: const EdgeInsets.only(right: 20.0, bottom: 20),
       child: Align(
         alignment: Alignment.bottomRight,
-        child: GestureDetector(
+        child: InkWell(
           onTap: isButtonActive
               ? () {
                   log("succsess login");
@@ -246,7 +246,7 @@ class _SubmitButtonWidget extends StatelessWidget {
                     color: AppColors.shadowColor,
                     spreadRadius: 2,
                     blurRadius: 12,
-                    offset: Offset(0, 2), // changes position of shadow
+                    offset: Offset(0, 2),
                   )
               ],
               borderRadius: const BorderRadius.all(Radius.circular(16.0)),

@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
-import 'package:test_task/theme/app_assets.dart';
-import 'package:test_task/theme/app_colors.dart';
+import 'package:test_task/resources/app_assets.dart';
+import 'package:test_task/ui/theme/app_colors.dart';
 
 /// {@template country_code_picker_modal}
 /// Widget that can be used on showing a modal as bottom sheet that

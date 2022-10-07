@@ -1,7 +1,7 @@
 import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:test_task/country_picker/country_code_picker_modal_custom.dart';
-import 'package:test_task/theme/app_colors.dart';
+import 'package:test_task/ui/theme/app_colors.dart';
+import 'package:test_task/ui/widgets/country_picker/country_code_picker_modal_custom.dart';
 
 /// Default favorites icon.
 const _kFavoritesIcon = Icon(Icons.favorite, color: Colors.red);
@@ -14,6 +14,12 @@ const _kBackgroundColor = AppColors.primarySwatch;
 
 /// Default modal barrier color.
 const _kBarrierColor = Color(0x50000000);
+
+/// Default min height
+const _pickerMinHeight = 150.0;
+
+/// Default max height
+const _pickerMaxHeight = 620.0;
 
 /// {@template fl_country_code_picker}
 /// A Flutter package for showing a modal that contains country dial code.
@@ -87,8 +93,8 @@ class CountryCodePicker {
   Future<CountryCode?> showPicker({
     required BuildContext context,
     bool fullScreen = false,
-    double pickerMinHeight = 150,
-    double pickerMaxHeight = 620,
+    double pickerMinHeight = _pickerMinHeight,
+    double pickerMaxHeight = _pickerMaxHeight,
     bool scrollToDeviceLocale = false,
     String? initialSelectedLocale,
   }) async {
