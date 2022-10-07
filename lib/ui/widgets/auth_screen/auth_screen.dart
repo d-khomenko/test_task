@@ -21,19 +21,19 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   final TextEditingController controller = TextEditingController();
   bool isButtonActive = false;
+  final int phoneNumberLength = 14;
 
   final MaskTextInputFormatter maskFormatter = MaskTextInputFormatter(
     mask: '(###) ###-####',
     filter: {"#": RegExp('[0-9]')},
     type: MaskAutoCompletionType.lazy,
   );
-  final int correctLenghtForPhoneNumber = 14;
 
   @override
   void initState() {
     controller.addListener(() {
       setState(() {
-        isButtonActive = controller.text.length == correctLenghtForPhoneNumber;
+        isButtonActive = controller.text.length == phoneNumberLength;
       });
     });
     super.initState();
@@ -204,6 +204,12 @@ class _PhoneNumbersWidgetsState extends State<_PhoneNumbersWidgets> {
                 filled: true,
                 fillColor: AppColors.inactiveColor,
               ),
+              onChanged: (number) {
+                setState(() {
+                  //isButtonActive = controller.text.length == phoneNumberLength;
+                });
+                log(number.length.toString());
+              },
             ),
           ),
         ),
