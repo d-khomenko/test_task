@@ -203,10 +203,22 @@ class _SubmitButtonWidget extends StatelessWidget {
               borderRadius: const BorderRadius.all(Radius.circular(16.0)),
               color: isButtonActive ? Colors.white : AppColors.inactiveColor,
             ),
-            child: SvgPicture.asset(
-              AppAssets.arrowRightSvg,
-              fit: BoxFit.scaleDown,
-              color: isButtonActive ? arrowColor : inactiveArrowColor,
+            child: Stack(
+              alignment: AlignmentDirectional.center,
+              children: [
+                SvgPicture.asset(
+                  AppAssets.arrowRightSvg,
+                  fit: BoxFit.scaleDown,
+                  color: isButtonActive ? arrowColor : inactiveArrowColor,
+                ),
+                Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: () => log("Done"),
+                    borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+                  ),
+                )
+              ],
             ),
           ),
         ),
