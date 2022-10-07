@@ -1,12 +1,7 @@
-// ignore_for_file:  sort_constructors_first
 // ignore_for_file: public_member_api_docs
-
-import 'dart:developer';
-
 import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-
 import 'package:test_task/ui/widgets/country_picker/country_code_picker.dart';
 
 class AuthModel extends ChangeNotifier {
@@ -14,10 +9,6 @@ class AuthModel extends ChangeNotifier {
 
   final countryPicker = const CountryCodePicker();
   final TextEditingController controller = TextEditingController();
-  // CountryCode code = codes
-  //     .map(CountryCode.fromMap)
-  //     .toList()
-  //     .firstWhere((element) => element.code == localeCode.substring(3, 5));
   bool _isButtonActive = false;
 
   final _phoneNumberStringDefaultLength = 14;

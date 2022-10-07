@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -177,49 +176,42 @@ class _SubmitButtonWidget extends StatelessWidget {
       (AuthModel model) => model.isButtonActive,
     );
 
-    return GestureDetector(
-      onTap: isButtonActive
-          ? () {
-              log("Succsess login");
-            }
-          : null,
-      child: Padding(
-        padding: const EdgeInsets.only(right: 20.0, bottom: 20),
-        child: Align(
-          alignment: Alignment.bottomRight,
-          child: Container(
-            height: buttonSize,
-            width: buttonSize,
-            decoration: BoxDecoration(
-              boxShadow: [
-                if (isButtonActive)
-                  const BoxShadow(
-                    color: AppColors.shadowColor,
-                    spreadRadius: 2,
-                    blurRadius: 12,
-                    offset: Offset(0, 2),
-                  )
-              ],
-              borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-              color: isButtonActive ? Colors.white : AppColors.inactiveColor,
-            ),
-            child: Stack(
-              alignment: AlignmentDirectional.center,
-              children: [
-                SvgPicture.asset(
-                  AppAssets.arrowRightSvg,
-                  fit: BoxFit.scaleDown,
-                  color: isButtonActive ? arrowColor : inactiveArrowColor,
-                ),
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () => log("Done"),
-                    borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-                  ),
+    return Padding(
+      padding: const EdgeInsets.only(right: 20.0, bottom: 20),
+      child: Align(
+        alignment: Alignment.bottomRight,
+        child: Container(
+          height: buttonSize,
+          width: buttonSize,
+          decoration: BoxDecoration(
+            boxShadow: [
+              if (isButtonActive)
+                const BoxShadow(
+                  color: AppColors.shadowColor,
+                  spreadRadius: 2,
+                  blurRadius: 12,
+                  offset: Offset(0, 2),
                 )
-              ],
-            ),
+            ],
+            borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+            color: isButtonActive ? Colors.white : AppColors.inactiveColor,
+          ),
+          child: Stack(
+            alignment: AlignmentDirectional.center,
+            children: [
+              SvgPicture.asset(
+                AppAssets.arrowRightSvg,
+                fit: BoxFit.scaleDown,
+                color: isButtonActive ? arrowColor : inactiveArrowColor,
+              ),
+              Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  onTap: isButtonActive ? () => log("Done") : null,
+                  borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+                ),
+              )
+            ],
           ),
         ),
       ),
