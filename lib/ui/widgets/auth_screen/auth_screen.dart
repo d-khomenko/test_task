@@ -1,15 +1,14 @@
 // ignore_for_file: public_member_api_docs
 import 'dart:developer';
 
-import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:provider/provider.dart';
 import 'package:test_task/resources/app_assets.dart';
 import 'package:test_task/ui/theme/app_colors.dart';
-import 'package:test_task/ui/widgets/country_picker/country_code_picker.dart';
+import 'package:test_task/ui/widgets/auth_screen/auth_model.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({Key? key}) : super(key: key);
@@ -19,26 +18,6 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  final TextEditingController controller = TextEditingController();
-  bool isButtonActive = false;
-  final int phoneNumberLength = 14;
-
-  final MaskTextInputFormatter maskFormatter = MaskTextInputFormatter(
-    mask: '(###) ###-####',
-    filter: {"#": RegExp('[0-9]')},
-    type: MaskAutoCompletionType.lazy,
-  );
-
-  @override
-  void initState() {
-    controller.addListener(() {
-      setState(() {
-        isButtonActive = controller.text.length == phoneNumberLength;
-      });
-    });
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,22 +28,15 @@ class _AuthScreenState extends State<AuthScreen> {
           child: Center(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Padding(
+              children: const [
+                Padding(
                   padding: EdgeInsets.only(top: 48, left: 20),
                   child: _GetStartedWidget(),
                 ),
-                const SizedBox(
-                  height: 160,
-                ),
-                _PhoneNumbersWidgets(
-                  myController: controller,
-                  maskFormatter: maskFormatter,
-                ),
+                SizedBox(height: 160),
+                _PhoneNumbersWidgets(),
                 Expanded(
-                  child: _SubmitButtonWidget(
-                    isButtonActive: isButtonActive,
-                  ),
+                  child: _SubmitButtonWidget(),
                 )
               ],
             ),
@@ -98,12 +70,8 @@ class _GetStartedWidget extends StatelessWidget {
 }
 
 class _PhoneNumbersWidgets extends StatefulWidget {
-  final TextEditingController myController;
-  final MaskTextInputFormatter maskFormatter;
   const _PhoneNumbersWidgets({
     Key? key,
-    required this.myController,
-    required this.maskFormatter,
   }) : super(key: key);
 
   @override
@@ -111,12 +79,11 @@ class _PhoneNumbersWidgets extends StatefulWidget {
 }
 
 class _PhoneNumbersWidgetsState extends State<_PhoneNumbersWidgets> {
-  CountryCode code = codes.map(CountryCode.fromMap).toList().first;
-
   @override
   Widget build(BuildContext context) {
+    final model = context.read<AuthModel>();
+    final code = context.select((AuthModel model) => model.code);
     const height = 48.0;
-    const countryPicker = CountryCodePicker();
     const inputTextBoderRadius = 16.0;
     const countryImageBorderRadius = 8.0;
     const countryImageHeight = 20.0;
@@ -128,15 +95,8 @@ class _PhoneNumbersWidgetsState extends State<_PhoneNumbersWidgets> {
           width: 20,
         ),
         GestureDetector(
-          onTap: () async {
-            code = await countryPicker.showPicker(context: context) ?? code;
-            //if (code != null) print(code);
-            setState(() {
-              log("$code");
-            });
-          },
+          onTap: () => model.onCountryCodePickerTap(context),
           child: Container(
-            //width: 120,
             height: height,
             decoration: const BoxDecoration(
               color: AppColors.inactiveColor,
@@ -192,9 +152,9 @@ class _PhoneNumbersWidgetsState extends State<_PhoneNumbersWidgets> {
                 ),
               ),
               cursorColor: AppColors.textColor,
-              controller: widget.myController,
+              controller: model.controller,
               keyboardType: TextInputType.number,
-              inputFormatters: [widget.maskFormatter],
+              inputFormatters: [model.maskFormatter],
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderSide: BorderSide.none,
@@ -204,12 +164,7 @@ class _PhoneNumbersWidgetsState extends State<_PhoneNumbersWidgets> {
                 filled: true,
                 fillColor: AppColors.inactiveColor,
               ),
-              onChanged: (number) {
-                setState(() {
-                  //isButtonActive = controller.text.length == phoneNumberLength;
-                });
-                log(number.length.toString());
-              },
+              onChanged: model.onEnteringPhoneNumber,
             ),
           ),
         ),
@@ -220,10 +175,8 @@ class _PhoneNumbersWidgetsState extends State<_PhoneNumbersWidgets> {
 }
 
 class _SubmitButtonWidget extends StatelessWidget {
-  final bool isButtonActive;
   const _SubmitButtonWidget({
     Key? key,
-    required this.isButtonActive,
   }) : super(key: key);
 
   @override
@@ -232,16 +185,20 @@ class _SubmitButtonWidget extends StatelessWidget {
     const arrowColor = Color(0xFF594C74);
     const inactiveArrowColor = Color(0xFF7886B8);
 
-    return Padding(
-      padding: const EdgeInsets.only(right: 20.0, bottom: 20),
-      child: Align(
-        alignment: Alignment.bottomRight,
-        child: InkWell(
-          onTap: isButtonActive
-              ? () {
-                  log("succsess login");
-                }
-              : null,
+    final isButtonActive = context.select(
+      (AuthModel model) => model.isButtonActive,
+    );
+
+    return GestureDetector(
+      onTap: isButtonActive
+          ? () {
+              log("Succsess login");
+            }
+          : null,
+      child: Padding(
+        padding: const EdgeInsets.only(right: 20.0, bottom: 20),
+        child: Align(
+          alignment: Alignment.bottomRight,
           child: Container(
             height: buttonSize,
             width: buttonSize,
