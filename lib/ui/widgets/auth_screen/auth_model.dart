@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs
+import 'dart:developer';
+
 import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -33,5 +35,9 @@ class AuthModel extends ChangeNotifier {
   Future<void> onCountryCodePickerTap(BuildContext context) async {
     code = await countryPicker.showPicker(context: context) ?? code;
     notifyListeners();
+  }
+
+  Future<void> onNextStepButtonTap(BuildContext context) async {
+    log("next page");
   }
 }

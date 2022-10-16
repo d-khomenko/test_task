@@ -168,6 +168,7 @@ class _SubmitButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final model = context.read<AuthModel>();
     const double buttonSize = 48.0;
     const arrowColor = Color(0xFF594C74);
     const inactiveArrowColor = Color(0xFF7886B8);
@@ -207,7 +208,9 @@ class _SubmitButtonWidget extends StatelessWidget {
               Material(
                 color: Colors.transparent,
                 child: InkWell(
-                  onTap: isButtonActive ? () => log("Done") : null,
+                  onTap: isButtonActive
+                      ? () => model.onNextStepButtonTap(context)
+                      : null,
                   borderRadius: const BorderRadius.all(Radius.circular(16.0)),
                 ),
               )
