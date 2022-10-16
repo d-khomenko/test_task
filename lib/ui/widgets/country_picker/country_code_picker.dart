@@ -37,18 +37,18 @@ class CountryCodePicker {
   /// {@endtemplate}
   final List<String> favorites;
 
-  /// {@template filtered_countries}
-  /// Filters all of the [CountryCode]s available and only show the codes that
-  /// are existing in this list.
-  /// {@endtemplate}
-  final List<String> filteredCountries;
-
   /// {@template favorite_icon}
   /// Custom icon of favorite countries.
   ///
   /// <i class="material-icons md-36">favorite</i> &#x2014;  Defaults to `Icons.favorite`
   /// {@endtemplate}
   final Icon favoritesIcon;
+
+  /// {@template filtered_countries}
+  /// Filters all of the [CountryCode]s available and only show the codes that
+  /// are existing in this list.
+  /// {@endtemplate}
+  final List<String> filteredCountries;
 
   /// {@template show_search_bar}
   /// An optional argument for showing search bar.
